@@ -1,0 +1,43 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}" type="text/css" />
+
+</head>
+<body>
+    
+    <h1>To-Do</h1>
+<div class="container">
+    <form action="/" method="POST">
+        {% csrf_token %}
+        {{form.title}}
+        <input type="submit" name="Create Task">
+    </form>
+    <div class="tasks">
+        <ul>
+        {% for task in tasks %}
+            <li>
+
+                {% if task.complete == True %}
+                    <strike>{{task}}</strike>
+                {% else %}
+                    <span>{{task}}</span>
+                {% endif %}
+
+                <a href="{% url 'delete' task.id %}">Delete</a>
+                <a href="{% url 'update_task' task.id %}">Update</a>
+            </li>
+        {% endfor %}
+        </ul>
+    </div>
+</div>
+</body>
+</html>
+
+
+
+
